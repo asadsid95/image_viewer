@@ -26,7 +26,7 @@ def next(img_number):
     my_label.grid_forget()
     my_label = Label(image=img_list[img_number-1]) # img_number is n+1 so shifting to next pic in list requires -1 to move to 1th element & etc
     next_button = Button(root, text='->', command=lambda: next(img_number+1))
-    back_button = Button(root, text='<-', command=lambda: next(img_number-1))
+    back_button = Button(root, text='<-', command=lambda: back(img_number-1))
 
     if img_number == len(img_list):
         next_button = Button(root, text = "->", state='disabled')
@@ -36,16 +36,26 @@ def next(img_number):
     back_button.grid(row=1, column=0)
 
 
-def back():
+def back(img_number):
     global my_label
     global next_button    
     global back_button
 
     my_label.grid_forget()
-    my_label = Label(root, image=img_list[])
+    my_label = Label(root, image=img_list[img_number-1])
+    next_button=Button(root, text='->',command=lambda: next(img_number+1))
+    back_button=Button(root, text='<-',command=lambda: back(img_number-1))
+
+    if img_number == 1:
+        back_button = Button(root, text="<-",state=DISABLED)
+    
+    my_label.grid(row=0,column=0,columnspan=3)
+    next_button.grid(row=1, column=2)
+    back_button.grid(row=1, column=0)
+
 
 next_button = Button(root, text="->",command=lambda: next(2))
-back_button = Button(root, text="<-", state='disabled', command=back)
+back_button = Button(root, text="<-", state=DISABLED, command=back)
 exit_button = Button(root, text="Exit", command=root.quit)
 
 
@@ -53,5 +63,4 @@ back_button.grid(row=1,column=0)
 exit_button.grid(row=1,column=1)
 next_button.grid(row=1,column=2)
 
-# exit_button.pack()
 root.mainloop()                                                                                           
